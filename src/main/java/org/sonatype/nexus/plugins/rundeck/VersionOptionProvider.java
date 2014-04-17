@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.maven.index.ArtifactInfo;
@@ -37,8 +38,9 @@ import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 import org.sonatype.nexus.index.Searcher;
+import org.sonatype.nexus.plugins.rundeck.model.Option;
 import org.sonatype.nexus.proxy.NoSuchRepositoryException;
-import org.sonatype.nexus.proxy.maven.metadata.operations.ComparableVersion;
+import org.sonatype.nexus.proxy.maven.metadata.operations.VersionComparator;
 import org.sonatype.plexus.rest.resource.PlexusResource;
 
 /**
@@ -88,18 +90,14 @@ public class VersionOptionProvider extends AbstractOptionProvider {
                 versions.add(new Option(buildOptionName(aInfo), aInfo.version));
             }
         }
+        final VersionComparator versionComparator = new VersionComparator();
         Collections.sort(versions, new Comparator<Option>() {
 
             public int compare(Option o1, Option o2) {
                 if (o1 == null || o1.getValue() == null || o2 == null || o2.getValue() == null) {
                     throw new IllegalArgumentException();
                 }
-
-                ComparableVersion v1 = new ComparableVersion(o1.getValue());
-                ComparableVersion v2 = new ComparableVersion(o2.getValue());
-
-                // we want to sort from newest to oldest
-                return -(v1.compareTo(v2));
+                return -1*versionComparator.compare(o1.getValue(), o2.getValue());
             }
         });
 

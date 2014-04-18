@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 <!--
    Copyright 2011 Vincent Behar
 
@@ -14,22 +17,22 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.sonatype.nexus.plugins</groupId>
-    <artifactId>nexus-plugins-parent</artifactId>
-    <version>8</version>
+    <artifactId>nexus-plugins</artifactId>
+    <version>2.8.0-05</version>
   </parent>
 
-  <!-- Project informations -->
-  <groupId>org.sonatype.nexus.plugins</groupId>
   <artifactId>nexus-rundeck-plugin</artifactId>
   <version>1.3-SNAPSHOT</version>
+
   <packaging>nexus-plugin</packaging>
-  <name>Nexus RunDeck Plugin</name>
-  <description>Nexus plugin that provides an Option Provider for RunDeck</description>
+  <name>Nexus Rundeck Plugin</name>
+  <description>Plugin to use Nexus as an option provider in Rundeck</description>
+
   <inceptionYear>2011</inceptionYear>
   <url>https://github.com/vbehar/nexus-rundeck-plugin</url>
   <scm>
@@ -66,184 +69,38 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <!-- Nexus (API) version -->
-    <nexus.version>1.9.2.2</nexus.version>
-
-    <!-- Maven Plugins versions -->
-    <plugin.antrun.version>1.6</plugin.antrun.version>
-    <plugin.assembly.version>2.2.1</plugin.assembly.version>
-    <plugin.changes.version>2.6</plugin.changes.version>
-    <plugin.checkstyle.version>2.6</plugin.checkstyle.version>
-    <plugin.clean.version>2.4.1</plugin.clean.version>
-    <plugin.compiler.version>2.3.2</plugin.compiler.version>
-    <plugin.dependency.version>2.3</plugin.dependency.version>
-    <plugin.deploy.version>2.6</plugin.deploy.version>
-    <plugin.eclipse.version>2.8</plugin.eclipse.version>
-    <plugin.enforcer.version>1.0.1</plugin.enforcer.version>
-    <plugin.findbugs.version>2.3.2</plugin.findbugs.version>
-    <plugin.gpg.version>1.3</plugin.gpg.version>
-    <plugin.help.version>2.1.1</plugin.help.version>
-    <plugin.install.version>2.3.1</plugin.install.version>
-    <plugin.jar.version>2.3.1</plugin.jar.version>
-    <plugin.javadoc.version>2.8</plugin.javadoc.version>
-    <plugin.jxr.version>2.3</plugin.jxr.version>
-    <plugin.pmd.version>2.5</plugin.pmd.version>
-    <plugin.project-info-reports.version>2.4</plugin.project-info-reports.version>
-    <plugin.release.version>2.2.1</plugin.release.version>
-    <plugin.resources.version>2.5</plugin.resources.version>
-    <!-- site 2.3 for maven 2.x and site 3.0-x for maven 3.x -->
-    <plugin.site.version>2.3</plugin.site.version>
-    <plugin.source.version>2.1.2</plugin.source.version>
-    <plugin.surefire.version>2.9</plugin.surefire.version>
-    <plugin.taglist.version>2.4</plugin.taglist.version>
-    <plugin.versions.version>1.2</plugin.versions.version>
+    <nexus.version>2.8.0-05</nexus.version>
+    <app-lifecycle.version>1.7</app-lifecycle.version>
   </properties>
 
-  <build>
-    <plugins>
-      <!-- IDE configuration -->
-      <plugin>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <configuration>
-          <downloadSources>true</downloadSources>
-        </configuration>
-      </plugin>
-      <!-- Release : we don't deploy to a repository -->
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <useReleaseProfile>false</useReleaseProfile>
-          <goals>install</goals>
-        </configuration>
-      </plugin>
-      <!-- GPG : no need to sign, as we don't deploy to a repository -->
-      <plugin>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>none</phase>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <!-- Configure plugins versions -->
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>${plugin.antrun.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>${plugin.assembly.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${plugin.checkstyle.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>${plugin.clean.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${plugin.compiler.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>${plugin.dependency.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>${plugin.deploy.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <version>${plugin.eclipse.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${plugin.enforcer.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>${plugin.gpg.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-help-plugin</artifactId>
-          <version>${plugin.help.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>${plugin.install.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>${plugin.jar.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${plugin.javadoc.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-pmd-plugin</artifactId>
-          <version>${plugin.pmd.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>${plugin.release.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>${plugin.resources.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>${plugin.site.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${plugin.source.version}</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${plugin.surefire.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <version>${plugin.findbugs.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+  <repositories>
+    <repository>
+      <id>rso-public-grid</id>
+      <url>https://repository.sonatype.org/content/groups/sonatype-public-grid/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 
   <dependencies>
     <!-- Nexus API -->
-    <dependency>
-      <groupId>org.sonatype.nexus</groupId>
-      <artifactId>nexus-plugin-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.sonatype.nexus</groupId>
-      <artifactId>nexus-proxy</artifactId>
-      <version>${nexus.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.sonatype.nexus</groupId>
-      <artifactId>nexus-rest-api</artifactId>
-      <version>${nexus.version}</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-  	<!-- Nexus Plugins -->
+
+      <dependency>
+          <groupId>org.sonatype.nexus</groupId>
+          <artifactId>nexus-plugin-api</artifactId>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.sonatype.nexus</groupId>
+          <artifactId>nexus-plugin-testsupport</artifactId>
+          <scope>test</scope>
+      </dependency>
+    
+    <!-- Nexus Plugins -->
     <dependency>
       <groupId>org.sonatype.nexus.plugins</groupId>
       <artifactId>nexus-indexer-lucene-plugin</artifactId>
@@ -251,24 +108,47 @@
       <scope>provided</scope>
       <type>nexus-plugin</type>
     </dependency>
+
+      <!-- have to depend on jar type in order to import lucene plugin classes directly? -->
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-indexer-lucene-plugin</artifactId>
+      <version>${nexus.version}</version>
+      <scope>provided</scope>
+      <type>jar</type>
+    </dependency>
+
+    <dependency>
+      <groupId>org.sonatype.nexus.plugins</groupId>
+      <artifactId>nexus-restlet1x-plugin</artifactId>
+      <version>${nexus.version}</version>
+      <scope>provided</scope>
+      <type>nexus-plugin</type>
+    </dependency>
   </dependencies>
 
-  <!--
-    for com.google.code.atinject:atinject:jar:1.0.0-rev3
-    required by org.sonatype.plugins:app-lifecycle-maven-plugin:1.1
-  -->
-  <pluginRepositories>
-    <pluginRepository>
-      <id>sonatype-third-party</id>
-      <name>Sonatype Third Party Repository</name>
-      <url>https://repository.sonatype.org/content/repositories/third-party</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
+  <build>
+    <plugins>
+
+      <!-- Needed for custom packaging -->
+
+    <plugin>
+        <groupId>org.sonatype.nexus</groupId>
+        <artifactId>nexus-plugin-bundle-maven-plugin</artifactId>
+        <extensions>true</extensions>
+    </plugin>
+
+      <!-- (Nexus 1.6 requires Java 7) -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 
 </project>

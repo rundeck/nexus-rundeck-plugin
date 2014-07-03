@@ -21,8 +21,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.maven.index.ArtifactInfo;
@@ -38,7 +40,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 import org.sonatype.nexus.index.Searcher;
 import org.sonatype.nexus.proxy.NoSuchRepositoryException;
-import org.sonatype.nexus.proxy.maven.metadata.operations.ComparableVersion;
+import org.sonatype.nexus.proxy.maven.metadata.operations.VersionComparator;
 import org.sonatype.plexus.rest.resource.PlexusResource;
 
 /**
@@ -95,11 +97,10 @@ public class VersionOptionProvider extends AbstractOptionProvider {
                     throw new IllegalArgumentException();
                 }
 
-                ComparableVersion v1 = new ComparableVersion(o1.getValue());
-                ComparableVersion v2 = new ComparableVersion(o2.getValue());
+                VersionComparator vc = new VersionComparator();
 
                 // we want to sort from newest to oldest
-                return -(v1.compareTo(v2));
+                return -(vc.compare(o1.getValue(), o2.getValue()));
             }
         });
 

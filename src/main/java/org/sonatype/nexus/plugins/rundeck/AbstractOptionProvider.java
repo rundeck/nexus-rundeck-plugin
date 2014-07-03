@@ -18,10 +18,14 @@ package org.sonatype.nexus.plugins.rundeck;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+
 import org.restlet.data.MediaType;
 import org.restlet.resource.Variant;
 import org.sonatype.plexus.rest.resource.AbstractPlexusResource;
 import org.sonatype.plexus.rest.resource.PathProtectionDescriptor;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Option provider for RunDeck - see http://rundeck.org/docs/RunDeck-Guide.html#option-model-provider<br>
@@ -47,10 +51,17 @@ public abstract class AbstractOptionProvider extends AbstractPlexusResource {
     public Object getPayloadInstance() {
         return null;
     }
+    
+    @Override
+    public void configureXStream(XStream xstream) {
+      super.configureXStream(xstream);
+      xstream.processAnnotations(Option.class);
+    }
 
     /**
      * JavaBean representation of a RunDeck option
      */
+    @XStreamAlias("option")
     public static class Option implements Serializable {
 
         private static final long serialVersionUID = 1L;

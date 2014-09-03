@@ -20,12 +20,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.enterprise.inject.Typed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.apache.maven.index.ArtifactInfo;
 import org.apache.maven.index.IteratorSearchResponse;
 import org.apache.maven.index.SearchType;
-import org.codehaus.plexus.component.annotations.Component;
 import org.restlet.Context;
 import org.restlet.data.Form;
 import org.restlet.data.Request;
@@ -43,7 +46,9 @@ import org.sonatype.plexus.rest.resource.PlexusResource;
  * 
  * @author Vincent Behar
  */
-@Component(role = PlexusResource.class, hint = "ArtifactIdOptionProvider")
+@Singleton
+@Named("ArtifactIdOptionProvider")
+@Typed(PlexusResource.class)
 public class ArtifactIdOptionProvider extends AbstractOptionProvider {
 
     @Inject

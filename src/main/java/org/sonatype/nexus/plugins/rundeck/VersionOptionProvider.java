@@ -21,14 +21,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.enterprise.inject.Typed;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.maven.index.ArtifactInfo;
 import org.apache.maven.index.IteratorSearchResponse;
 import org.apache.maven.index.SearchType;
-import org.codehaus.plexus.component.annotations.Component;
 import org.restlet.Context;
 import org.restlet.data.Form;
 import org.restlet.data.Request;
@@ -38,7 +41,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 import org.sonatype.nexus.index.Searcher;
 import org.sonatype.nexus.proxy.NoSuchRepositoryException;
-import org.sonatype.nexus.proxy.maven.metadata.operations.ComparableVersion;
+import org.sonatype.nexus.proxy.maven.metadata.operations.VersionComparator;
 import org.sonatype.plexus.rest.resource.PlexusResource;
 
 /**
@@ -47,7 +50,9 @@ import org.sonatype.plexus.rest.resource.PlexusResource;
  * 
  * @author Vincent Behar
  */
-@Component(role = PlexusResource.class, hint = "VersionOptionProvider")
+@Singleton
+@Named("VersionOptionProvider")
+@Typed(PlexusResource.class)
 public class VersionOptionProvider extends AbstractOptionProvider {
 
     @Inject
@@ -95,11 +100,10 @@ public class VersionOptionProvider extends AbstractOptionProvider {
                     throw new IllegalArgumentException();
                 }
 
-                ComparableVersion v1 = new ComparableVersion(o1.getValue());
-                ComparableVersion v2 = new ComparableVersion(o2.getValue());
+                VersionComparator vc = new VersionComparator();
 
                 // we want to sort from newest to oldest
-                return -(v1.compareTo(v2));
+                return -(vc.compare(o1.getValue(), o2.getValue()));
             }
         });
 

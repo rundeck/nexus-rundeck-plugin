@@ -32,7 +32,9 @@ Note that if you want to retrieve the artifact from your Rundeck script, you sho
 
 ## Change Log
 
-- Version TBD: release with support for Nexus 2.8
+- Version 1.4
+  - Release with support for Nexus 2.8
+  - Migrated to JSR-330 annotations
 - Version 1.2.2.2 : re-release 1.2, but with a dependence on Nexus 1.9.2.2 (instead of Nexus 1.9)
 - Version 1.2 : the option provider for version now includes the date of the version (release)
 - Version 1.1 : add option provider for artifactId
@@ -47,7 +49,8 @@ Note that if you want to retrieve the artifact from your Rundeck script, you sho
 
 ## How to build
 
-- prerequisites : Apache Maven 2.2.1 or 3.x http://maven.apache.org/
+- prerequisites : Apache Maven 3.0.4 - 3.0.5 http://maven.apache.org/
+- Java 1.7
 - run "mvn package"
 - use the "bundle" file in target/nexus-rundeck-plugin-VERSION-bundle.zip
 
